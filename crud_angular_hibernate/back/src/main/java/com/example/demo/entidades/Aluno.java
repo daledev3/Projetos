@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Entity;
 
@@ -15,7 +17,7 @@ public class Aluno {
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 	
 	@Column
 	private String nome;
@@ -27,6 +29,10 @@ public class Aluno {
 	private LocalDate dataNascimento;
 	
 	@ManyToMany
+	@JoinTable(
+	        name = "aluno_curso",
+	        joinColumns = @JoinColumn(name = "aluno_id"),
+	        inverseJoinColumns = @JoinColumn(name = "curso_id"))
     private List<Curso> cursos;
 	
 	
@@ -55,10 +61,10 @@ public class Aluno {
 		this.cursos = cursos;
 	}
 	public Long getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Long id) {
-		Id = id;
+		id = id;
 	}
 
 	

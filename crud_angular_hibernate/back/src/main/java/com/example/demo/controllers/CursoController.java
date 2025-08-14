@@ -27,9 +27,14 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/cursos")
 public class CursoController {
 	
-	 private final CursoRepository cursoRepo = null;
+	 private final CursoRepository cursoRepo;
 
-	// Criar novo curso
+	public CursoController(CursoRepository cursoRepo) {
+		super();
+		this.cursoRepo = cursoRepo;
+	}
+
+		// Criar novo curso
 	    @PostMapping
 	    public ResponseEntity<CursoResponseDTO> criarCurso(@RequestBody @Valid CursoRequestDTO dto) {
 	        Curso curso = CursoMapper.toEntity(dto);

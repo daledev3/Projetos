@@ -89,5 +89,29 @@ public class AlunoController {
 	            return ResponseEntity.noContent().build();
 	        }).orElse(ResponseEntity.notFound().build());
 	    }
+	    
+	    //matricular aluno em curso
+	    @PutMapping("/{alunoId}/adicionar-curso/{cursoId}")
+	    public ResponseEntity<AlunoResponseDTO> matricularAlunoEmCurso(
+	    		@PathVariable Long alunoId,
+	            @PathVariable Long cursoId) {
+
+	        Optional<Aluno> alunoOpt = alunoRepo.findById(alunoId);
+	        Optional<Curso> cursoOpt = cursoRepo.findById(cursoId);
+
+	        if (alunoOpt.isEmpty() || cursoOpt.isEmpty()) {
+	            return ResponseEntity.notFound().build();
+	        }
+
+	        Aluno aluno = alunoOpt.get();
+	        Curso curso = cursoOpt.get();
+
+	        if (!aluno.getCursos().contains(curso)) {
+	            aluno.getCursos().add(curso);
+	            alunoRepo.save(aluno);
+	        }
+
+	        return ResponseEntity.ok(AlunoMapper.toResponseDTO(aluno));
+	    }
 
 }
