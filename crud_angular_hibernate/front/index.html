@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <title> Cadastro de alunos</title>
+   <meta charset="UTF-8">
+   <link rel="stylesheet" href="styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+
+</head>
+<body ng-app="alunoApp" ng-controller="AlunoController as ctrl">
+    <div class="container">
+ <h1>Cadastro de alunos</h1>
+ <form ng-submit="ctrl.salvarAluno()">
+  <input type="text" ng-model="ctrl.novoAluno.nome" placeholder="Nome do aluno" required> 
+  <input type="email" ng-model="ctrl.novoAluno.email" placeholder="Email do aluno" required/>
+  <button type="submit">{{ctrl.edicao ? 'Atualizar' : 'Salvar'}}</button>
+   </form>
+
+<h2> Alunos já cadastrados</h2>
+<table ng-if="ctrl.alunos.length">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nome</th>
+      <th> Email </th>
+      <th> Ações </th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr  ng-repeat="aluno in ctrl.alunos">
+          <td> {{aluno.id}}</td>
+           <td> {{aluno.nome}}</td>
+            <td> {{aluno.email}}</td>
+            <td>
+               <button ng-click="ctrl.editarAluno(aluno)">Editar</button>
+              <button ng-click="ctrl.excluirAluno(aluno.id)">Excluir</button>
+            </td>
+        </tr>
+      </tbody>
+  <p ng-if="!ctrl.alunos.length">Nenhum aluno cadastrado.</p>
+</table>
+ </div>
+</body>
+</html>
